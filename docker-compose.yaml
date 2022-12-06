@@ -1,0 +1,13 @@
+version: "3.9"
+
+services:
+  # External authorization for Envoy
+  slack_gpt:
+    image: slack_gpt
+    build: .
+    environment:
+      - SLACK_BOT_TOKEN=${SLACK_BOT_TOKEN}
+      - SLACK_SIGNING_SECRET=${SLACK_SIGNING_SECRET}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+    ports:
+      - "3000:3000"
