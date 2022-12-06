@@ -5,10 +5,6 @@ import openai
 from slack_bolt import App
 import os
 
-print(os.environ["SLACK_BOT_TOKEN"])
-print(os.environ["SLACK_SIGNING_SECRET"])
-sys.stdout.flush()
-
 app = App(token=os.environ["SLACK_BOT_TOKEN"], signing_secret=os.environ["SLACK_SIGNING_SECRET"])
 
 
@@ -16,6 +12,7 @@ app = App(token=os.environ["SLACK_BOT_TOKEN"], signing_secret=os.environ["SLACK_
 def handle_message(body, say, logger):
     try:
         event = body["event"]
+
         print(body)
         sys.stdout.flush()
 
@@ -31,7 +28,6 @@ def handle_message(body, say, logger):
                                                   temperature=0.8,
                                                   user=event["user"])
             print(f"completion: {completion}")
-            print("\n")
             sys.stdout.flush()
 
             # Post the response to the Slack channel
