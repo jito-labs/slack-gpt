@@ -22,16 +22,17 @@ def handle_message(body, say, logger):
             text = event["text"]
             logger.info(f"Received message from user {user}: {text}")
 
-            completion = openai.Completion.create(engine="text-davinci-003",
-                                                  prompt=text,
-                                                  max_tokens=2048,
-                                                  temperature=0.8,
-                                                  user=event["user"])
-            print(f"completion: {completion}")
-            sys.stdout.flush()
-
-            # Post the response to the Slack channel
-            say(channel=channel, text=completion.choices[0].text)
+            try:
+                completion = openai.Completion.create(engine="code-davinci-002",
+                                                      prompt=text,
+                                                      max_tokens=2048,
+                                                      temperature=0.8,
+                                                      user=event["user"])
+                print(f"completion: {completion}")
+                sys.stdout.flush()
+                say(channel=channel, text=completion.choices[0].text)
+            except Exception as e:
+                say(channel=channel, text=str(e))
     except Exception as e:
         logger.error(e)
 
